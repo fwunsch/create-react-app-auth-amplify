@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Clock from './Clock.js'
-import DeviceMotion from 'react-device-motion';
+import ReactAccelerometer from 'react-accelerometer'
 
 
 import logo from './logo.svg';
@@ -16,6 +16,18 @@ class App extends Component {
     return (
       <div>
         <div><Clock/></div>
+        <ReactAccelerometer>
+        {(position, rotation) => (
+          <ul>
+            <li>x: {position.x}</li>
+            <li>y: {position.y}</li>
+            <li>z: {position.z}</li>
+            <li>rotation alpha: {rotation.alpha}</li>
+            <li>rotation beta: {rotation.beta}</li>
+            <li>rotation gamma: {rotation.gamma}</li>
+          </ul>
+        )}
+      </ReactAccelerometer>
       </div>
     );
   }
