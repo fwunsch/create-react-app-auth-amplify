@@ -5,7 +5,7 @@ class Clock extends React.Component {
         super(props);
         this.state = {
             date: new Date(),
-            accel: 0
+            accel: {'x': 0, 'y': 0, 'z': 0}
         };
     }
 
@@ -34,7 +34,7 @@ class Clock extends React.Component {
                 <h2>Current time is {this.state.date.toLocaleDateString()} or simply {this.state.date.getTime()}.</h2>
                 </div>
                 <div>
-                    <h1>This is 3D acceleration: {this.state.accel} m/s</h1>
+                    <h1>This is 3D acceleration: {JSON.stringify(this.state.accel)} m/s</h1>
                 </div>
             </div>
         )
