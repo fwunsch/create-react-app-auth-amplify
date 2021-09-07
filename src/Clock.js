@@ -1,4 +1,6 @@
 import React from 'react'
+import DeviceMotion from 'react-device-motion';
+
 
 class Clock extends React.Component {
     constructor(props) {
@@ -35,6 +37,17 @@ class Clock extends React.Component {
                 </div>
                 <div>
                     <h1>This is 3D acceleration: {JSON.stringify(this.state.accel)} m/s</h1>
+                    <DeviceMotion>
+                        {({
+                        acceleration, accelerationIncludingGravity, interval, rotationRate
+                        }) => (
+                        <div>
+                            {`Acceleration: ${JSON.stringify(acceleration)}`}
+                            {`Acceleration including gravity: ${JSON.stringify(accelerationIncludingGravity)}`}
+                            {`Interval: ${interval}`}
+                        </div>
+                        )}
+                    </DeviceMotion>
                 </div>
             </div>
         )

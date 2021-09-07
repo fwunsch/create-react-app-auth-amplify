@@ -16,17 +16,6 @@ class App extends Component {
     return (
       <div>
         <div><Clock/></div>
-      <DeviceMotion>
-        {({
-          acceleration, accelerationIncludingGravity, interval, rotationRate
-        }) => (
-          <div>
-            {`Acceleration: ${JSON.stringify(acceleration)}`}
-            {`Acceleration including gravity: ${JSON.stringify(accelerationIncludingGravity)}`}
-            {`Interval: ${interval}`}
-          </div>
-        )}
-      </DeviceMotion>
       </div>
     );
   }
