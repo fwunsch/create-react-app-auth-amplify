@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Clock from './Clock.js'
+import DeviceMotion from 'react-device-motion';
+
 
 import logo from './logo.svg';
 import './App.css';
@@ -12,8 +14,19 @@ Amplify.configure(aws_exports);
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Clock />
+      <div>
+        <div><Clock/></div>
+      <DeviceMotion>
+        {({
+          acceleration, accelerationIncludingGravity, interval, rotationRate
+        }) => (
+          <div>
+            {`Acceleration: ${JSON.stringify(acceleration)}`}
+            {`Acceleration including gravity: ${JSON.stringify(accelerationIncludingGravity)}`}
+            {`Interval: ${interval}`}
+          </div>
+        )}
+      </DeviceMotion>
       </div>
     );
   }
