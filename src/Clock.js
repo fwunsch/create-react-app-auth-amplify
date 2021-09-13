@@ -44,10 +44,10 @@ class Clock extends React.Component {
         }
         
         if (this.state.isRunning){
-            window.removeEventListener("devicemotion", handleMotion);
+            window.removeEventListener("devicemotion", this.handleMotion);
             this.setState({isRunning: false, accelInterval: -1});
         }else{
-            window.addEventListener("devicemotion", handleMotion);
+            window.addEventListener("devicemotion", this.handleMotion);
             this.setState({isRunning: true, eventCount: 0});
         }
 
