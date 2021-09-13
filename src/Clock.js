@@ -23,15 +23,15 @@ class Clock extends React.Component {
     }
 
     handleMotion(event) {
-        newEventCount = this.state.eventCount + 1;
+        let newEventCount = this.state.eventCount + 1;
         this.setState({accel: {'x': event.acceleration.x, 
                             'y': event.acceleration.y, 
                             'z': event.acceleration.z},
                         accelInterval: event.interval,
                         eventCount: newEventCount
-                        });
+        });
 
-      }
+    }
 
     handleClick() {
 
