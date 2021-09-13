@@ -6,11 +6,14 @@ class Clock extends React.Component {
         this.state = {
             date: new Date(),
             isRunning: false,
-            accel: {'x': 0, 'y': 0, 'z': 0}
+            accel: {'x': 0, 'y': 0, 'z': 0},
+            accelInterval: -1,
+            eventCount: 0
         };
 
         // This binding is necessary to make `this` work in the callback
         this.handleClick = this.handleClick.bind(this);
+        this.handleMotion = this.handleMotion.bind(this);
     }
 
     tick() {
@@ -19,27 +22,43 @@ class Clock extends React.Component {
         });
     }
 
-    handleClick() {
-        this.setState(prevState => ({
-          isRunning: !prevState.isRunning
-        }));
+    handleMotion(event) {
+        newEventCount = this.state.eventCount + 1;
+        this.setState({accel: {'x': event.acceleration.x, 
+                            'y': event.acceleration.y, 
+                            'z': event.acceleration.z},
+                        accelInterval: event.interval,
+                        eventCount: newEventCount
+                        });
 
-        if (this.state.isRunning) {
-            this.timerID = setInterval(
-                () => this.tick(),
-                100
-            );
+      }
+
+    handleClick() {
+
+        // Request permission for iOS 13+ devices
+        if (
+            DeviceMotionEvent &&
+            typeof DeviceMotionEvent.requestPermission === "function"
+        ) {
+            DeviceMotionEvent.requestPermission();
         }
-        else {
-            clearInterval(this.timerID);
+        
+        if (this.state.isRunning){
+            window.removeEventListener("devicemotion", handleMotion);
+            this.setState({isRunning: false, accelInterval: -1});
+        }else{
+            window.addEventListener("devicemotion", handleMotion);
+            this.setState({isRunning: true, eventCount: 0});
         }
+
+        
     }
 
     render() {
         return (
             <div>
-            <h1>This is a ticking clock</h1>
-            <h2>Current time is {this.state.date.toLocaleDateString()} or simply {this.state.date.getTime()}.</h2>
+            <h1>This is an acceleration sensor reader</h1>
+            <h2>Current event count is {this.state.eventCount} with event interval {this.state.accelInterval} ms. -1 means stopped.</h2>
             <button onClick={this.handleClick}>
                 {this.state.isRunning ? 'ON' : 'OFF'}
             </button>
