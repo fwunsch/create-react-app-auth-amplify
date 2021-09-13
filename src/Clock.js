@@ -7,8 +7,12 @@ class Clock extends React.Component {
         super(props);
         this.state = {
             date: new Date(),
+            isRunning: false,
             accel: {'x': 0, 'y': 0, 'z': 0}
         };
+
+        // This binding is necessary to make `this` work in the callback
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
@@ -28,27 +32,20 @@ class Clock extends React.Component {
         });
     }
 
+    handleClick() {
+        this.setState(prevState => ({
+          isRunning: !prevState.isRunning
+        }));
+    }
+
     render() {
         return (
             <div>
-                <div>
-                <h1>This is a ticking clock</h1>
-                <h2>Current time is {this.state.date.toLocaleDateString()} or simply {this.state.date.getTime()}.</h2>
-                </div>
-                <div>
-                    <h1>This is 3D acceleration: {JSON.stringify(this.state.accel)} m/s</h1>
-                    <DeviceMotion>
-                        {({
-                        acceleration, accelerationIncludingGravity, interval, rotationRate
-                        }) => (
-                        <div>
-                            {`Acceleration: ${JSON.stringify(acceleration)}`}
-                            {`Acceleration including gravity: ${JSON.stringify(accelerationIncludingGravity)}`}
-                            {`Interval: ${interval}`}
-                        </div>
-                        )}
-                    </DeviceMotion>
-                </div>
+            <h1>This is a ticking clock</h1>
+            <h2>Current time is {this.state.date.toLocaleDateString()} or simply {this.state.date.getTime()}.</h2>
+            <button onClick={this.handleClick}>
+                {this.state.isRunning ? 'ON' : 'OFF'}
+            </button>
             </div>
         )
     }
