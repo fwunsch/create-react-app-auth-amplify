@@ -1,6 +1,4 @@
 import React from 'react'
-import DeviceMotion from 'react-device-motion';
-
 
 class Clock extends React.Component {
     constructor(props) {
@@ -15,17 +13,6 @@ class Clock extends React.Component {
         this.handleClick = this.handleClick.bind(this);
     }
 
-    componentDidMount() {
-        this.timerID = setInterval(
-            () => this.tick(),
-            1000
-        );
-    }
-
-    componentWillUnmount() {
-        clearInterval(this.timerID);
-    }
-
     tick() {
         this.setState({
             date: new Date()
@@ -36,6 +23,16 @@ class Clock extends React.Component {
         this.setState(prevState => ({
           isRunning: !prevState.isRunning
         }));
+
+        if (this.state.isRunning) {
+            this.timerID = setInterval(
+                () => this.tick(),
+                100
+            );
+        }
+        else {
+            clearInterval(this.timerID);
+        }
     }
 
     render() {
