@@ -58,6 +58,9 @@ class Clock extends React.Component {
             <button onClick={this.handleClick}>
                 {this.state.isRunning ? 'ON' : 'OFF'}
             </button>
+            <p>X: {this.state.Xarr}</p>
+            <p>Y: {this.state.Yarr}</p>
+            <p>Z: {this.state.Zarr}</p>
             </div>
         )
     }
