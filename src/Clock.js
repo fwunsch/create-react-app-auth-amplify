@@ -63,10 +63,25 @@ class Clock extends React.Component {
             <Plot
                 data={[
                 {
-                    y: [2, 6, 3],
+                    y: this.state.Xarr,
                     type: 'scatter',
                     mode: 'lines+markers',
                     marker: {color: 'red'},
+                    name: 'X'
+                },
+                {
+                    y: this.state.Yarr,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    marker: {color: 'blue'},
+                    name: 'Y'
+                },
+                {
+                    y: this.state.Zarr,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    marker: {color: 'green'},
+                    name: 'Z'
                 }
                 ]}
                 layout={ {width: 320, height: 240, title: 'Acceleration values'} }
