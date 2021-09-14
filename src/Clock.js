@@ -8,7 +8,8 @@ class Clock extends React.Component {
             isRunning: false,
             accel: {'x': 0, 'y': 0, 'z': 0},
             accelInterval: -1,
-            eventCount: 0
+            eventCount: 0,
+            accelArr: []
         };
 
         // This binding is necessary to make `this` work in the callback
@@ -23,12 +24,11 @@ class Clock extends React.Component {
     }
 
     handleMotion(event) {
-        let newEventCount = this.state.eventCount + 1;
         this.setState({accel: {'x': event.acceleration.x, 
                             'y': event.acceleration.y, 
                             'z': event.acceleration.z},
                         accelInterval: event.interval,
-                        eventCount: newEventCount
+                        eventCount: eventCount + 1
         });
 
     }
@@ -48,7 +48,7 @@ class Clock extends React.Component {
             this.setState({isRunning: false, accelInterval: -1});
         }else{
             window.addEventListener("devicemotion", this.handleMotion);
-            this.setState({isRunning: true, eventCount: 0});
+            this.setState({isRunning: true, eventCount: 0, accelArr: []});
         }
 
         
