@@ -24,11 +24,12 @@ class Clock extends React.Component {
     }
 
     handleMotion(event) {
+        let oldEventCount = state.eventCount;
         this.setState({accel: {'x': event.acceleration.x, 
                             'y': event.acceleration.y, 
                             'z': event.acceleration.z},
                         accelInterval: event.interval,
-                        eventCount: eventCount + 1
+                        eventCount: oldEventCount + 1
         });
 
     }
