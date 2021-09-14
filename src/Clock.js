@@ -6,10 +6,11 @@ class Clock extends React.Component {
         this.state = {
             date: new Date(),
             isRunning: false,
-            accel: {'x': 0, 'y': 0, 'z': 0},
             accelInterval: -1,
             eventCount: 0,
-            accelArr: []
+            Xarr: [],
+            Yarr: [],
+            Zarr: []
         };
 
         // This binding is necessary to make `this` work in the callback
@@ -17,20 +18,14 @@ class Clock extends React.Component {
         this.handleMotion = this.handleMotion.bind(this);
     }
 
-    tick() {
-        this.setState({
-            date: new Date()
-        });
-    }
-
     handleMotion(event) {
-        let oldEventCount = this.state.eventCount;
-        this.setState({accel: {'x': event.acceleration.x, 
-                            'y': event.acceleration.y, 
-                            'z': event.acceleration.z},
-                        accelInterval: event.interval,
-                        eventCount: oldEventCount + 1
-        });
+        this.setState(prevState => ({
+            accelInterval: event.interval,
+            eventCount: prevState.eventCount + 1,
+            Xarr: [...prevState.Xarr, event.acceleration.x],
+            Yarr: [...prevState.Yarr, event.acceleration.y],
+            Zarr: [...prevState.Zarr, event.acceleration.z]
+        }));
 
     }
 
@@ -49,7 +44,7 @@ class Clock extends React.Component {
             this.setState({isRunning: false, accelInterval: -1});
         }else{
             window.addEventListener("devicemotion", this.handleMotion);
-            this.setState({isRunning: true, eventCount: 0, accelArr: []});
+            this.setState({isRunning: true, eventCount: 0, Xarr: [], Yarr: [], Zarr: []});
         }
 
         
