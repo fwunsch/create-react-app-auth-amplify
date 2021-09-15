@@ -84,7 +84,7 @@ class Clock extends React.Component {
                     name: 'Z'
                 }
                 ]}
-                layout={ {title: 'Acceleration values'} }
+                layout={ {height: window.innerWidth, width: window.innerWidth, title: 'Acceleration values'} }
             />
             </div>
         )
