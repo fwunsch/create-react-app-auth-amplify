@@ -53,6 +53,35 @@ class Clock extends React.Component {
     }
 
     render() {
+        let plotjsx = (<p>Press stop to plot the recording.</p>);
+        if (!this.state.isRunning && this.state.Xarr.length > 0) {
+            plotjsx = (<Plot
+            data={[
+            {
+                y: this.state.Xarr,
+                type: 'scatter',
+                mode: 'lines+markers',
+                marker: {color: 'red'},
+                name: 'X'
+            },
+            {
+                y: this.state.Yarr,
+                type: 'scatter',
+                mode: 'lines+markers',
+                marker: {color: 'blue'},
+                name: 'Y'
+            },
+            {
+                y: this.state.Zarr,
+                type: 'scatter',
+                mode: 'lines+markers',
+                marker: {color: 'green'},
+                name: 'Z'
+            }
+            ]}
+            layout={ {height: window.innerWidth, width: window.innerWidth, title: 'Acceleration values'} }
+        />);
+        }
         return (
             <div>
             <h1>This is an acceleration sensor reader</h1>
@@ -60,32 +89,7 @@ class Clock extends React.Component {
             <button onClick={this.handleClick}>
                 {this.state.isRunning ? 'ON' : 'OFF'}
             </button>
-            <Plot
-                data={[
-                {
-                    y: this.state.Xarr,
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    marker: {color: 'red'},
-                    name: 'X'
-                },
-                {
-                    y: this.state.Yarr,
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    marker: {color: 'blue'},
-                    name: 'Y'
-                },
-                {
-                    y: this.state.Zarr,
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    marker: {color: 'green'},
-                    name: 'Z'
-                }
-                ]}
-                layout={ {height: window.innerWidth, width: window.innerWidth, title: 'Acceleration values'} }
-            />
+            {plotjsx}
             </div>
         )
     }
