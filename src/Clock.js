@@ -53,9 +53,10 @@ class Clock extends React.Component {
     }
 
     render() {
-        let plotjsx = (<p>Press stop to plot the recording.</p>);
+        let accplotjsx = (<p>Press stop to plot the recording.</p>);
+        let posplotjsx = null;
         if (!this.state.isRunning && this.state.Xarr.length > 0) {
-            plotjsx = (<Plot
+            accplotjsx = (<Plot
             data={[
             {
                 y: this.state.Xarr,
@@ -80,7 +81,42 @@ class Clock extends React.Component {
             }
             ]}
             layout={ {height: window.innerWidth, width: window.innerWidth, title: 'Acceleration values'} }
-        />);
+            />);
+
+            let posX = [0];
+            let posY = [0];
+            let posZ = [0];
+            for (let i=0; i<this.state.Xarr.length; i++){
+                posX.push(posX.at(-1) + this.state.Xarr(i));
+                posY.push(posY.at(-1) + this.state.Yarr(i));
+                posZ.push(posZ.at(-1) + this.state.Zarr(i));
+            }
+            posplotjsx = (<Plot
+                data={[
+                {
+                    y: posX,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    marker: {color: 'red'},
+                    name: 'X'
+                },
+                {
+                    y: posY,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    marker: {color: 'blue'},
+                    name: 'Y'
+                },
+                {
+                    y: posZ,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    marker: {color: 'green'},
+                    name: 'Z'
+                }
+                ]}
+                layout={ {height: window.innerWidth, width: window.innerWidth, title: 'Position'} }
+                />);
         }
         return (
             <div>
@@ -89,7 +125,8 @@ class Clock extends React.Component {
             <button onClick={this.handleClick}>
                 {this.state.isRunning ? 'ON' : 'OFF'}
             </button>
-            {plotjsx}
+            {accplotjsx}
+            {posplotjsx}
             </div>
         )
     }
