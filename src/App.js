@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Clock from './Clock.js'
+import Clock from './Clock.js';
+import './App.css';
 
 // import logo from './logo.svg';
 // import './App.css';
