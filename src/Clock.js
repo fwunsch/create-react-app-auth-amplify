@@ -91,32 +91,32 @@ class Clock extends React.Component {
                 posY.push(posY.at(-1) + this.state.Yarr(i));
                 posZ.push(posZ.at(-1) + this.state.Zarr(i));
             }
-            posplotjsx = (<Plot
-                data={[
-                {
-                    y: posX,
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    marker: {color: 'red'},
-                    name: 'X'
-                },
-                {
-                    y: posY,
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    marker: {color: 'blue'},
-                    name: 'Y'
-                },
-                {
-                    y: posZ,
-                    type: 'scatter',
-                    mode: 'lines+markers',
-                    marker: {color: 'green'},
-                    name: 'Z'
-                }
-                ]}
-                layout={ {height: window.innerWidth, width: window.innerWidth, title: 'Position'} }
-                />);
+            // posplotjsx = (<Plot
+            //     data={[
+            //     {
+            //         y: posX,
+            //         type: 'scatter',
+            //         mode: 'lines+markers',
+            //         marker: {color: 'red'},
+            //         name: 'X'
+            //     },
+            //     {
+            //         y: posY,
+            //         type: 'scatter',
+            //         mode: 'lines+markers',
+            //         marker: {color: 'blue'},
+            //         name: 'Y'
+            //     },
+            //     {
+            //         y: posZ,
+            //         type: 'scatter',
+            //         mode: 'lines+markers',
+            //         marker: {color: 'green'},
+            //         name: 'Z'
+            //     }
+            //     ]}
+            //     layout={ {height: window.innerWidth, width: window.innerWidth, title: 'Position'} }
+            //     />);
         }
         return (
             <div>
