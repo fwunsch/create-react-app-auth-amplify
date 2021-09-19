@@ -128,6 +128,9 @@ class Clock extends React.Component {
             </button>
             {accplotjsx}
             {posplotjsx}
+            <p>X: {posX}</p>
+            <p>Y: {posY}</p>
+            <p>Z: {posZ}</p>
             </div>
         )
     }
