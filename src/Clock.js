@@ -90,6 +90,7 @@ class Clock extends React.Component {
                 posX.push(posX.at[-1] + this.state.Xarr[i]);
                 posY.push(posY.at[-1] + this.state.Yarr[i]);
                 posZ.push(posZ.at[-1] + this.state.Zarr[i]);
+                console.log(posX[-1]);
             }
             posplotjsx = (<Plot
                 data={[
