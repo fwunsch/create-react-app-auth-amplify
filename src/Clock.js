@@ -83,9 +83,9 @@ class Clock extends React.Component {
             layout={ {height: window.innerWidth, width: window.innerWidth, title: 'Acceleration values'} }
             />);
 
-            let posX = [0];
-            let posY = [0];
-            let posZ = [0];
+            var posX = [0];
+            var posY = [0];
+            var posZ = [0];
             for (let i=0; i<this.state.Xarr.length; i++){
                 posX.push(posX.at[-1] + this.state.Xarr[i]);
                 posY.push(posY.at[-1] + this.state.Yarr[i]);
