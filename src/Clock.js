@@ -10,6 +10,7 @@ class Clock extends React.Component {
             isRunning: false,
             accelInterval: -1,
             eventCount: 0,
+            Tarr: [],
             Xarr: [],
             Yarr: [],
             Zarr: []
@@ -24,6 +25,7 @@ class Clock extends React.Component {
         this.setState(prevState => ({
             accelInterval: event.interval,
             eventCount: prevState.eventCount + 1,
+            Tarr: [...prevState.Tarr, Date.now()],
             Xarr: [...prevState.Xarr, event.acceleration.x],
             Yarr: [...prevState.Yarr, event.acceleration.y],
             Zarr: [...prevState.Zarr, event.acceleration.z]
@@ -56,9 +58,11 @@ class Clock extends React.Component {
         let accplotjsx = (<p>Press stop to plot the recording.</p>);
         let posplotjsx = null;
         if (!this.state.isRunning && this.state.Xarr.length > 0) {
+            let tarrzero = this.state.Tarr - this.state.Tarr[0];
             accplotjsx = (<Plot
             data={[
             {
+                x: tarrzero,
                 y: this.state.Xarr,
                 type: 'scatter',
                 mode: 'lines+markers',
@@ -66,6 +70,7 @@ class Clock extends React.Component {
                 name: 'X'
             },
             {
+                x: tarrzero,
                 y: this.state.Yarr,
                 type: 'scatter',
                 mode: 'lines+markers',
@@ -73,6 +78,7 @@ class Clock extends React.Component {
                 name: 'Y'
             },
             {
+                x: tarrzero,
                 y: this.state.Zarr,
                 type: 'scatter',
                 mode: 'lines+markers',
@@ -83,17 +89,22 @@ class Clock extends React.Component {
             layout={ {height: window.innerWidth, width: window.innerWidth, title: 'Acceleration values'} }
             />);
 
+            var tInc = [];
+            for(let i=0; i<this.state.Tarr.length-1; i++){
+                tInc.push(0.001 * (this.state.Tarr[i+1] - this.state.Tarr[i]));
+            }
             var posX = [0];
             var posY = [0];
             var posZ = [0];
-            for (let i=0; i<this.state.Xarr.length; i++){
-                posX.push(posX.at(-1) + this.state.Xarr[i]);
-                posY.push(posY.at(-1) + this.state.Yarr[i]);
-                posZ.push(posZ.at(-1) + this.state.Zarr[i]);
+            for (let i=0; i<tInc.length; i++){
+                posX.push(posX.at(-1) + this.state.Xarr[i] * tInc[i]);
+                posY.push(posY.at(-1) + this.state.Yarr[i] * tInc[i]);
+                posZ.push(posZ.at(-1) + this.state.Zarr[i]) * tInc[i];
             }
             posplotjsx = (<Plot
                 data={[
                 {
+                    x: tarrzero,
                     y: posX,
                     type: 'scatter',
                     mode: 'lines+markers',
@@ -101,6 +112,7 @@ class Clock extends React.Component {
                     name: 'X'
                 },
                 {
+                    x: tarrzero,
                     y: posY,
                     type: 'scatter',
                     mode: 'lines+markers',
@@ -108,6 +120,7 @@ class Clock extends React.Component {
                     name: 'Y'
                 },
                 {
+                    x: tarrzero,
                     y: posZ,
                     type: 'scatter',
                     mode: 'lines+markers',
@@ -127,9 +140,6 @@ class Clock extends React.Component {
             </button>
             {accplotjsx}
             {posplotjsx}
-            <p>X: {posX}</p>
-            <p>Y: {posY}</p>
-            <p>Z: {posZ}</p>
             </div>
         )
     }
