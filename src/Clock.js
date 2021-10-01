@@ -55,8 +55,10 @@ class Clock extends React.Component {
     }
 
     render() {
-        let accplotjsx = (<p>Press stop to plot the recording.</p>);
+        let accplotjsx = (<p>Stop the recording to plot the results.</p>);
         let posplotjsx = null;
+        let timedeltaplotjsx = null;
+
         if (!this.state.isRunning && this.state.Xarr.length > 0) {
             let tarrzero = this.state.Tarr - this.state.Tarr[0];
             accplotjsx = (<Plot
@@ -130,6 +132,18 @@ class Clock extends React.Component {
                 ]}
                 layout={ {height: window.innerWidth, width: window.innerWidth, title: 'Position'} }
                 />);
+            
+            timedeltaplotjsx = (<Plot
+                data={[
+                {
+                    y: tInc,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    marker: {color: 'red'},
+                }
+                ]}
+                layout={ {height: window.innerWidth, width: window.innerWidth, title: 'Time increments'} }
+                />);
         }
         return (
             <div>
@@ -140,6 +154,7 @@ class Clock extends React.Component {
             </button>
             {accplotjsx}
             {posplotjsx}
+            {timedeltaplotjsx}
             </div>
         )
     }
